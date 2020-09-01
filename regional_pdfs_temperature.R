@@ -103,7 +103,8 @@ regional_pdfs_temperature <- function(county, start_year, stop_year, element, al
   p_dec <- plot_mth("December", data_dec, "blue", xmin, xmax, ymax, ytxt, "", "Density")
 
   grid.arrange(arrangeGrob(p_dec, top = '')
-             , arrangeGrob(p_jan, top = textGrob(paste0(county, " ", start_year, "-", stop_year, " (", length(stations_coverage$id), " stations)"), gp = gpar(fontsize = 14)))
+             , arrangeGrob(p_jan, top = textGrob(paste0(county, " ", start_year, "-", stop_year, " (", length(stations_coverage$id), 
+                                                        " stations, ", alt_min, "-", alt_max, " masl)"), gp = gpar(fontsize = 14)))
              , arrangeGrob(p_feb, top = '')
              , arrangeGrob(p_mar, top = '')
              , arrangeGrob(p_apr, top = '')
@@ -147,7 +148,7 @@ regional_pdfs_temperature <- function(county, start_year, stop_year, element, al
   stat <- stat_mth("December", data_dec)
 
   meta_info <- tibble(element, county, t_offset, start_year, stop_year, masl_greater_equal = alt_min, masl_less = alt_max, nb_sd)
-  filename <- paste0("stat_", element, "_", county, "_", start_year, "_", stop_year, "__", alt_min, "_", alt_max, "masl__", nb_sd, "sd.csv")
+  filename <- paste0("./output/stat_", element, "_", county, "_", start_year, "_", stop_year, "__", alt_min, "_", alt_max, "masl__", nb_sd, "sd.csv")
   
   write.table(meta_info, file = filename, sep = ";", row.names = FALSE)                                               # meta_information
   cat("\n", file = filename, append = TRUE) 
