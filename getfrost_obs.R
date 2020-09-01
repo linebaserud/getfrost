@@ -6,7 +6,7 @@ library(tidyr)
 # -------------------------------------------------------------------------------------------------
 
 # get observations from Frost
-fget_obs <- function(station, start, stop, element, t_resolution, t_offset){
+getfrost_obs <- function(station, start, stop, element, t_resolution, t_offset){
 
   client_id  <- "ca076a66-7ea1-4ca2-8eaf-f091899a9eba:f8413549-8f24-4ce1-8154-e5a2c85e553c"
   url <- paste0("https://", client_id, "@frost.met.no/observations/v0.jsonld?",

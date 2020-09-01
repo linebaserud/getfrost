@@ -6,7 +6,7 @@
 # 25 Aug 2020
 #
 # Example Isfjord Radio: 
-# source('fget_obs.R'); D_tmp<-fget_obs(99790,"2019-01-01","2019-12-31","min(air_temperature P1D)","P1D","PT18H"); fget_data_coverage(D_tmp$referenceTime,2019,2019,"P1D",0.96))
+# source('getfrost_obs.R'); D_tmp<-getfrost_obs(99790,"2019-01-01","2019-12-31","min(air_temperature P1D)","P1D","PT18H"); getfrost_data_coverage(D_tmp$referenceTime,2019,2019,"P1D",0.96))
 #
 
 # ------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ mondf <- function(d1, d2) {
 
 # ------------------------------------------------------------------------------
 
-fget_data_coverage <- function(t_vec, start, stop, t_resolution, frac_limit) {
+getfrost_data_coverage <- function(t_vec, start, stop, t_resolution, frac_limit) {
   
   if (t_resolution == "P1D") {
     period_full <- as.numeric(difftime(stop, start, units = c("days")))

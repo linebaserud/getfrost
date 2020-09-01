@@ -14,17 +14,17 @@ library("dplyr")
 library("gridExtra")
 library("grid")
 
-source("fget_stations_wmo.R")
-source("fget_obs.R")
-source("fget_data_coverage.R")
+source("getfrost_stations_wmo.R")
+source("getfrost_obs.R")
+source("getfrost_data_coverage.R")
 
 # -----------------------------------------------------------------------
 
 regional_pdfs_temperature <- function(county, start_year, stop_year, element, alt_min, alt_max, nb_sd){
 
-  stations <- fget_stations_wmo('county', county)
+  stations <- getfrost_stations_wmo('county', county)
   
-  # Filter stations based on altitude range  
+  # Filter stations based on altitude range to account for vertical temperature gradient  
   stations_altitude <- tibble() 
   for (idx in 1:length(stations$id)) {
     if (stations$masl[idx] >= alt_min && stations$masl[idx] < alt_max) {
@@ -32,17 +32,17 @@ regional_pdfs_temperature <- function(county, start_year, stop_year, element, al
     }
   }
 
-  # Combine observations from all stations with data coverage and gather by month
+  # Combine observations from all stations with data coverage and distribute by month
   t_offset <- "PT18H"
   t_resolution <- "P1D"
   coverage_limit <- 0.9
   data <- tibble(); stations_coverage <- tibble()
   for (i in 1:length(stations_altitude$id)) { 
     print("------------------------------------------------------------")
-    data_tmp <- fget_obs(substr(stations_altitude$id[i], 3, 8), paste0(start_year, "-01-01"), paste0(stop_year, "-12-31"), element, t_resolution, t_offset)
+    data_tmp <- getfrost_obs(substr(stations_altitude$id[i], 3, 8), paste0(start_year, "-01-01"), paste0(stop_year, "-12-31"), element, t_resolution, t_offset)
     
     # Add observations only if data coverage (and track these stations)
-    if (fget_data_coverage(data_tmp$referenceTime, paste0(start_year, "-01-01"), paste0(stop_year, "-12-31"), "P1D", coverage_limit)) { 
+    if (getfrost_data_coverage(data_tmp$referenceTime, paste0(start_year, "-01-01"), paste0(stop_year, "-12-31"), "P1D", coverage_limit)) { 
       print(paste0("  Data coverage above ", coverage_limit * 100, " %, using data from SN",substr(stations_altitude$id[i], 3, 8)))
       data <- rbind(data,cbind(data_tmp, mth = as.numeric(substr(data_tmp$referenceTime, 6, 7))))     
       stations_coverage <- rbind(stations_coverage, stations_altitude[i, ])          
