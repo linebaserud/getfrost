@@ -17,7 +17,7 @@ library("grid")
 source("getfrost_stations_wmo.R")
 source("getfrost_obs.R")
 source("getfrost_data_coverage.R")
-source("getfrost_ts.R")
+source("getfrost_ats.R")
 
 # -----------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ regional_pdfs_precipitation <- function(county, start_year, stop_year, element, 
   stations_precip <- tibble()
   for (idx in 1:length(stations$id)) {
     print("---------------------------------------------------------------------------------------------")
-    if (getfrost_ts(substr(stations$id[idx], 3, 8),paste0(start_year, "-01-01"), paste0(stop_year, "-12-31"), element, t_offset)) {
+    if (getfrost_ats(substr(stations$id[idx], 3, 8),paste0(start_year, "-01-01"), paste0(stop_year, "-12-31"), element, t_offset)) {
       print(paste0( "  ", element, " exists between ", start, " and ", stop))
       stations_precip <- rbind(stations_precip, stations[idx, 2:11])
     }

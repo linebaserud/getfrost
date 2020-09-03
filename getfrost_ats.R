@@ -6,7 +6,7 @@ library(tidyr)
 # -------------------------------------------------------------------------------------------------
 
 # get available time series from Frost
-getfrost_ts <- function(station, start, stop, element, t_offset){
+getfrost_ats <- function(station, start, stop, element, t_offset){
 
   client_id  <- "ca076a66-7ea1-4ca2-8eaf-f091899a9eba:f8413549-8f24-4ce1-8154-e5a2c85e553c"
   url <- paste0("https://", client_id, "@frost.met.no/observations/availableTimeSeries/v0.jsonld?",
@@ -16,7 +16,6 @@ getfrost_ts <- function(station, start, stop, element, t_offset){
   if (class(output) != 'try-error') {print(paste0("SN", station, ": information on available timeseries retrieved from frost.met.no! (", object.size(output), " bytes)"))}
   else {print(paste0("SN", station, ": no success :-("))}
   df <- unnest(output$data,cols=c())
-  # df$referenceTime <- as.POSIXct(strptime(x = as.character(df$referenceTime), format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")) # transform date format  
 
   eid <- df$elementId
   tof=df$timeOffset
