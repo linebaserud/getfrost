@@ -1,42 +1,41 @@
 #!/usr/bin/env Rscript 
 
-library(jsonlite)
-library(tidyr)
+# Function: get all available timeseries for specific element from frost.met.no
+#
+# Example: getfrost_ats(18700,"max(air_temperature P1D)")
+#
+# 1 September 2020 
+# lineb@met.no
+#
 
 # -------------------------------------------------------------------------------------------------
 
-# get available time series from Frost
-getfrost_ats <- function(station, start, stop, element, t_offset){
+library(jsonlite)
+library(tidyr)
+library(readr)
 
-  client_id  <- "ca076a66-7ea1-4ca2-8eaf-f091899a9eba:f8413549-8f24-4ce1-8154-e5a2c85e553c"
+source("err_messages.R")
+
+# -------------------------------------------------------------------------------------------------
+
+getfrost_ats <- function(station, element){
+
+  client_id  <- as.character(read_tsv("client_id.txt", col_names = TRUE, cols(client_id = col_character())))
   url <- paste0("https://", client_id, "@frost.met.no/observations/availableTimeSeries/v0.jsonld?",
                "sources=SN", station)
 
-  output <- try(fromJSON(URLencode(url), flatten = T))
-  if (class(output) != 'try-error') {print(paste0("SN", station, ": information on available timeseries retrieved from frost.met.no! (", object.size(output), " bytes)"))}
-  else {print(paste0("SN", station, ": no success :-("))}
-  df <- unnest(output$data,cols=c())
-
-  eid <- df$elementId
-  tof=df$timeOffset
- # print(eid)
- # print(element)
-  
-
-  if (length(which(eid == element))>0) { # check if have this element
-
-    idx=intersect(which(eid == element), which(tof == t_offset)) 
-    validfrom_before_start <- as.numeric(difftime(start,df$validFrom[idx])) > 0
-    validto_after_stop <- as.numeric(difftime(stop,df$validTo[idx])) < 0 || is.na(as.numeric(difftime(stop,df$validTo[idx])))
-
-    if (validfrom_before_start && validto_after_stop){ # check if stations has data for påeriod start-stop
-      return(TRUE)
-    } else {
-      return(FALSE)
-    }
-
+  cat("----------------------------------------------------------------------------------------------------\n")
+  output <- try(fromJSON(URLencode(url), flatten = TRUE))
+  if (class(output) != 'try-error') {
+    print(paste0("SN", station, ": information on available timeseries retrieved from frost.met.no! (", object.size(output), " bytes)"))
   } else {
-    return(FALSE)
+    err_messages()
   }
+
+  ats <- unnest(output$data, cols=c())
+  ats_element <- ats[which(ats$elementId == element), ]
+
+  return(ats_element)
+
 }
 
