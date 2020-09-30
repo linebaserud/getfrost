@@ -2,5 +2,6 @@
 output/
 *.RData
 *.Rhistory
+*.csv
 
 client_id.txt
