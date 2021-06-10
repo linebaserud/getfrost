@@ -1,7 +1,9 @@
 *.swp
-output/
 *.RData
 *.Rhistory
 *.csv
+
+output/
+scripts/
 
 client_id.txt
