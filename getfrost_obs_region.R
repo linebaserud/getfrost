@@ -1,9 +1,15 @@
-#!/usr/bin/env Rscript 
-
-# region GR0 = Norge
-# Liste over elementer man kan be om for Norge : https://frost.met.no/observations/availableTimeSeries/v0.jsonld?sources=GR0&fields=sourceId,elementId,validFrom,validTo
 #
-# Liste over alle regioner: https://frost.met.no/sources/v0.jsonld?types=RegionDataset&ids=GR*)
+# Function: get regional observations from frost.met.no
+#
+# March 2021 / June 2021
+# lineb@met.no
+#
+# Liste over elementer man kan be om for Norge : https://frost.met.no/observations/availableTimeSeries/v0.jsonld?sources=GR0&fields=sourceId,elementId,validFrom,validTo
+# Liste over alle regioner: https://frost.met.no/sources/v0.jsonld?types=RegionDataset&ids=GR*
+
+# Examples:
+# Norge:     getfrost_obs_region("GR0","1900-01-01","2020-01-01","mean(air_temperature_anomaly P1Y 1961_1990)")
+# Trøndelag: getfrost_obs_region("GR4","2000-01-01","2020-01-01","sum(precipitation_amount P1M)")
 
 # -------------------------------------------------------------------------------------------------
 
