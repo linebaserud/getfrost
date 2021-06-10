@@ -14,4 +14,4 @@
 
 * getfrost_ou_threshold.R: get observations over/under a threshold for one station/element
 
-* supporting functions: err_messages.R (prints error messages from frost.met.no), print_table.R (prints dataframe to file of desired type)
+* supporting files and functions: client_id_dummy.txt(dummy file showing format of the client_id file), err_messages.R (prints error messages from frost.met.no), print_table.R (prints dataframe to file of desired type)
