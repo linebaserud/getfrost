@@ -30,8 +30,6 @@ getfrost_obs_region <- function(region, start, stop, element){
                "&referencetime=", start, "T00:00/", stop, "T23:59",
                "&elements=", element)
 
-print(url)
-
   cat("------------------------------------------------------------------\n")
   output <- try(fromJSON(URLencode(url), flatten = TRUE))
   if (class(output) != 'try-error') {
