@@ -1,5 +1,8 @@
 
 # Function: get observations from frost.met.no
+# 
+# September 2020 / March 2021
+# lineb@met.no
 #
 # Example: 
 # getfrost_obs("SN18700", "2018-01-01","2018-02-02","max(air_temperature P1D)","P1D","PT18H")
