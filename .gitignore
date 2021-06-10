@@ -4,6 +4,6 @@
 *.csv
 
 output/
-scripts/
+in_progress/
 
 client_id.txt
