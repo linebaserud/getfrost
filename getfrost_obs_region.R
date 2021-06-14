@@ -4,7 +4,7 @@
 # March 2021 / June 2021
 # lineb@met.no
 #
-# List of all regions: https://frost.met.no/sources/v0.jsonld?types=RegionDataset&ids=GR*
+# List of all regions: https://frost.met.no/sources/v0.jsonld?types=RegionDataset
 # List of elements Norway : https://frost.met.no/observations/availableTimeSeries/v0.jsonld?sources=GR0&fields=sourceId,elementId,validFrom,validTo
 
 # Examples:
