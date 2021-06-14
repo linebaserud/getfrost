@@ -17,7 +17,7 @@ source("getfrost_obs.R")
 
 # -------------------------------------------------------------------------------------------------
 
-getfrost_ou_threshold <- function(over_under, threshold, station, start, stop, element, t_resolution, t_offset){
+getfrost_ou_threshold <- function(over_under, threshold, station, start, stop, element, t_resolution, t_offset = NA){
   
   df <- getfrost_obs(station, start, stop, element, t_resolution, t_offset)
 
